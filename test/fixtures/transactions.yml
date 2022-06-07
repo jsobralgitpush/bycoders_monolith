@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transaction_type: 1
+  date: MyString
+  amount: 1.5
+  taxpayer_id: MyString
+  card_used: MyString
+  time: MyString
+  store_owner: MyString
+  store_name: MyString
+
+two:
+  transaction_type: 1
+  date: MyString
+  amount: 1.5
+  taxpayer_id: MyString
+  card_used: MyString
+  time: MyString
+  store_owner: MyString
+  store_name: MyString
