@@ -6,7 +6,7 @@ To start this project, run
 - `docker-compose build` to build the containers
 - `docker-compose up` to start the project
 
-### Unit Tests
+### Tests
 
 To run model tests
 `bundle exec rspec spec/models/transaction_spec.rb`
