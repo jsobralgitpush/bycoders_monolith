@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
     def index
-        @transactions = Transaction.all
+        @transactions = Transaction.al
         @store_names  = @transactions.pluck(:store_name).uniq
 
         filter_by_query if params[:store_name].present?
