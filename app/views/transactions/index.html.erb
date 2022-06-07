@@ -1,0 +1,75 @@
+<h2>Painel de Transações</h2>
+
+<div class="file-uploader">
+    <form method="POST" action="<%= transactions_path %>">
+        <input name="file" type="file" id="file-input">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    </form>
+</div>
+
+<br>
+
+<div class="filters">
+    <form method="GET" action="<%= transactions_path %>"> 
+        <select name="store_name" onchange="this.form.submit()">
+            <% @store_names.each do |store_name| %>
+                <option value="<%= store_name %>">
+                    <%= store_name %>
+                </option>
+            <% end %>
+            <option value="">
+                Todos
+            </option>
+        </select>
+    </form>
+</div>
+
+<br>
+
+<% if params[:store_name].present? %>
+    <div class="balance">
+        O saldo disponível para <%= params[:store_name] %> é <%= @transactions.sum(:amount)/100 %>
+    </div>
+    
+    <br>
+<% end %>
+
+<table>
+  <tr>
+    <th>Nome da Loja</th>
+    <th>Nome do dono da Loja</th>
+    <th>Tipo de transação</th>
+    <th>Data</th>
+    <th>Tipo de extrato</th>
+    <th>Valor</th>
+  </tr>
+  <% @transactions.each do |transaction| %>
+    <tr>
+        <td><%= transaction.store_name %></td>
+        <td><%= transaction.store_owner %></td>
+        <td><%= set_transaction_kind(transaction.transaction_type) %></td>
+        <td><%= transaction.date %></td>
+        <td><%= set_extract_type(transaction.transaction_type) %></td>
+        <td><%= transaction.amount/100 %></td>
+    </tr>
+  <% end %>
+</table>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        var formData = new FormData()
+
+        formData.append('file', event.target.files[0])
+        const authenticity_token = document.querySelector('input[name="authenticity_token"]').value
+
+        fetch(`<%= transactions_path %>?authenticity_token=${authenticity_token}`, {
+            method: 'POST',
+            body: formData
+        }).then().then(function(){
+            alert("Arquivo enviado com sucesso!")
+            window.location.reload()
+        });
+    });
+})
+</script>
